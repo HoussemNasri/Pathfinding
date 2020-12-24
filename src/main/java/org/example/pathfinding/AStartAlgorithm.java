@@ -5,7 +5,7 @@ import java.util.Set;
 
 import javafx.geometry.Point2D;
 
-import org.example.grid.AStarCost;
+import org.example.cell.AstarCost;
 import org.example.grid.CellKind;
 import org.example.grid.GridState;
 import org.example.style.AStarCellStyler;
@@ -128,7 +128,7 @@ public class AStartAlgorithm implements PathfindingAlgorithm{
                 }
                 cell.getCell().setKind(CellKind.OPEN_CELL);
                 cell.sethCost(heuristic(cell));
-                cell.getCell().setCost(new AStarCost(cell.gCost(), cell.hCost(), cell.fCost()));
+                cell.getCell().setCost(new AstarCost(cell.gCost(), cell.hCost()));
             }
         }
     }

@@ -38,8 +38,8 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        GridState gridState = new GridState(150, 70);
-        GridView gridRenderer = new GridView(gridState, 9);
+        GridState gridState = new GridState(15, 10);
+        GridView gridRenderer = new GridView(gridState, 70);
         GridPane gridPane = gridRenderer.getView();
 
         gridRenderer.registerStyler(StartGoalStyler.getInstance());

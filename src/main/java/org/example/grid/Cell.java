@@ -4,11 +4,13 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Point2D;
 
+import org.example.cell.AstarCost;
+
 public class Cell {
     private Point2D coordinate;
     private ObjectProperty<CellKind> cellKind = new SimpleObjectProperty<>(CellKind.NORMAL_CELL);
 
-    private ObjectProperty<AStarCost> cost = new SimpleObjectProperty<>(new AStarCost());
+    private ObjectProperty<AstarCost> cost = new SimpleObjectProperty<>(new AstarCost());
 
     public Cell(Point2D coordinate, CellKind cellKind) {
         this.coordinate = coordinate;
@@ -51,15 +53,15 @@ public class Cell {
         return this.coordinate;
     }
 
-    public void setCost(AStarCost cost) {
+    public void setCost(AstarCost cost) {
         this.cost.setValue(cost);
     }
 
-    public AStarCost getCost() {
+    public AstarCost getCost() {
         return cost.get();
     }
 
-    public ObjectProperty<AStarCost> costProperty() {
+    public ObjectProperty<AstarCost> costProperty() {
         return cost;
     }
 

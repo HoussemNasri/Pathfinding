@@ -1,1 +1,31 @@
-.text { -fx-font-smoothing-type: lcd; }
+.text {
+    -fx-font-smoothing-type: lcd;
+}
+
+.default-start-cell-style {
+    -fx-background-color: #411aa4;
+}
+
+.default-goal-cell-style {
+    -fx-background-color: #8f3d11;
+}
+
+.default-normal-cell-style {
+    -fx-background-color: #ffffff;
+}
+
+.default-wall-cell-style {
+    -fx-background-color: #1d9bac;
+}
+
+.astar-open-cell-style{
+    -fx-background-color: #34b526;
+}
+
+.astar-close-cell-style{
+    -fx-background-color: #e04242;
+}
+
+.astar-path-cell-style{
+    -fx-background-color: #0a86ea;
+}

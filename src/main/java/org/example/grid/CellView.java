@@ -2,7 +2,6 @@ package org.example.grid;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
@@ -14,7 +13,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-import org.example.MainApp;
+import org.example.cell.AstarCost;
 import org.example.style.CellStyler;
 import org.example.style.StandardCellStyler;
 import org.example.style.StartGoalStyler;
@@ -40,8 +39,8 @@ public class CellView extends StackPane {
         cellModel.cellKindProperty().addListener(this::handleKindChanged);
     }
 
-    private void updateAStar(ObservableValue<? extends AStarCost> observable, AStarCost o, AStarCost cost) {
-        if (!cost.isAssigned() || getPrefHeight() < 40)
+    private void updateAStar(ObservableValue<? extends AstarCost> observable, AstarCost o, AstarCost cost) {
+        if (!cost.isComplete() || getPrefHeight() < 40)
             return;
         gCostTextView = createRegularTextView(String.valueOf(cost.gCost()));
         hCostTextView = createRegularTextView(String.valueOf(cost.hCost()));
@@ -79,7 +78,6 @@ public class CellView extends StackPane {
     private Text createRegularTextView(String txt) {
         Text text = new Text(txt);
         Font font = Font.font("Trebuchet MS", FontWeight.NORMAL, computerSmallFontSize());
-        System.out.println(font);
         text.setFont(font);
         text.setFill(Color.BLACK);
 
