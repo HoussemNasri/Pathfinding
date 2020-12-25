@@ -8,10 +8,12 @@ import org.example.cell.AbstractCellModel;
 public abstract class AbstractCellView<T extends Region, M extends AbstractCellModel> {
     protected double size;
     protected M cellModel;
+    protected T view;
 
     public AbstractCellView(double size, M cellModel) {
         this.size = size;
         this.cellModel = cellModel;
+        initializeView();
 
         getView().setPrefHeight(size);
         getView().setPrefWidth(size);
@@ -33,5 +35,8 @@ public abstract class AbstractCellView<T extends Region, M extends AbstractCellM
         getView().getStyleClass().add("default-wall-cell-style");
     }
 
-    public abstract T getView();
+    public T getView(){
+        return view;
+    }
+    public abstract void initializeView();
 }

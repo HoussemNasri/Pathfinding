@@ -1,19 +1,14 @@
 package org.example.cell.view;
 
 import javafx.beans.Observable;
-import javafx.beans.value.ChangeListener;
 import javafx.scene.layout.StackPane;
 
 import org.example.cell.AstarCell;
 
 public class AstarCellView extends AbstractCellView<StackPane, AstarCell> {
 
-    private StackPane view;
-
     public AstarCellView(double size, AstarCell cellModel) {
         super(size, cellModel);
-
-        view = new StackPane();
         customizeCell(null, null, cellModel.getType());
         cellModel.cellTypeProperty().addListener(this::customizeCell);
     }
@@ -44,7 +39,7 @@ public class AstarCellView extends AbstractCellView<StackPane, AstarCell> {
     }
 
     @Override
-    public StackPane getView() {
-        return view;
+    public void initializeView() {
+        view = new StackPane();
     }
 }

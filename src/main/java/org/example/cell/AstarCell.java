@@ -16,6 +16,10 @@ public class AstarCell extends AbstractCellModel {
         this(coordinate, cellType, true);
     }
 
+    public AstarCell(Point coordinate) {
+        this(coordinate, CellType.NORMAL_CELL);
+    }
+
     public CellType getType() {
         return cellType.get();
     }
