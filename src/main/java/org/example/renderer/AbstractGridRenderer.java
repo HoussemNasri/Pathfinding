@@ -40,6 +40,7 @@ public abstract class AbstractGridRenderer<C extends AbstractCellModel, S extend
         this.height = gridState.getHeight();
         this.gridView = new GridPane();
         styleGridView();
+        render();
     }
 
     private void styleGridView() {
