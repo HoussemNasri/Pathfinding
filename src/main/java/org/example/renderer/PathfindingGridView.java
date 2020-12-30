@@ -21,8 +21,8 @@ import org.example.cell.view.AbstractCellView;
  * @param <C> The cell model
  * @param <S> The grid state
  * @param <V> The cell view
- * */
-public abstract class AbstractGridRenderer<C extends AbstractCellModel, S extends AbstractGridState<C>, V extends AbstractCellView<? extends Region, C>> implements GridRenderer<GridPane> {
+ */
+public abstract class PathfindingGridView<C extends AbstractCellModel, S extends AbstractGridState<C>, V extends AbstractCellView<? extends Region, C>> implements GridRenderer<GridPane> {
     private static final double BORDER_WIDTH = 1;
     private static final Paint BORDER_PANT = Color.BLACK;
 
@@ -33,13 +33,21 @@ public abstract class AbstractGridRenderer<C extends AbstractCellModel, S extend
 
     protected GridPane gridView;
 
-    public AbstractGridRenderer(S gridState, double cellSize) {
+    public PathfindingGridView(S gridState, double cellSize) {
         this.gridState = gridState;
         this.cellSize = cellSize;
         this.width = gridState.getWidth();
         this.height = gridState.getHeight();
         this.gridView = new GridPane();
         styleGridView();
+        render();
+
+        registerWidthListener();
+        registerHeightListener();
+    }
+
+    public void setCellSize(double cellSize) {
+        this.cellSize = cellSize;
         render();
     }
 
@@ -82,6 +90,20 @@ public abstract class AbstractGridRenderer<C extends AbstractCellModel, S extend
                 gridView.add(cellView.getView(), x, y);
             }
         }
+    }
+
+    private void registerWidthListener() {
+        gridState.widthProperty().addListener((observable, oldValue, newValue) -> {
+            PathfindingGridView.this.width = newValue.intValue();
+            render();
+        });
+    }
+
+    private void registerHeightListener() {
+        gridState.widthProperty().addListener((observable, oldValue, newValue) -> {
+            PathfindingGridView.this.width = newValue.intValue();
+            render();
+        });
     }
 
     public S getGridState() {

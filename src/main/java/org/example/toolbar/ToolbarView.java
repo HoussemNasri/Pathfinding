@@ -22,6 +22,7 @@ public class ToolbarView extends ToolBar {
 
     public ToolbarView(Toolbar toolbar) {
         this.toolbar = toolbar;
+        setOrientation(Orientation.VERTICAL);
         buildToolbar();
         toggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
             int indexOfSelectedToggle = toggleGroup.getToggles().indexOf(newValue);
@@ -39,8 +40,6 @@ public class ToolbarView extends ToolBar {
     private ToggleButton createToolView(Tool tool) {
         ToggleButton button = new ToggleButton();
         ImageView icon = new ImageView(tool.getIconUri());
-        icon.setFitWidth(20);
-        icon.setFitHeight(20);
         button.setGraphic(icon);
 
         button.setTooltip(new Tooltip(tool.getDescription()));

@@ -7,9 +7,9 @@ import org.example.cell.Point;
 import org.example.cell.state.AstarGridState;
 import org.example.cell.view.AstarCellView;
 
-public class AstarGridRenderer extends AbstractGridRenderer<AstarCell, AstarGridState, AstarCellView> {
+public class AstarGridView extends PathfindingGridView<AstarCell, AstarGridState, AstarCellView> {
 
-    public AstarGridRenderer(AstarGridState gridState, double cellSize) {
+    public AstarGridView(AstarGridState gridState, double cellSize) {
         super(gridState, cellSize);
     }
 

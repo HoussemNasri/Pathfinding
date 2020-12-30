@@ -2,19 +2,16 @@ package org.example;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import org.example.cell.AstarCell;
 import org.example.cell.state.AstarGridState;
 import org.example.grid.GridState;
 import org.example.pathfinding.AStartAlgorithm;
 import org.example.grid.GridView;
-import org.example.renderer.AbstractGridRenderer;
-import org.example.renderer.AstarGridRenderer;
+import org.example.renderer.AstarGridView;
 import org.example.style.AStarCellStyler;
 import org.example.style.StandardCellStyler;
 import org.example.style.StartGoalStyler;
@@ -41,9 +38,9 @@ public class MainApp extends Application {
         timer.start();
     }
 
-    private AstarGridRenderer createAstarGridRenderer() {
+    private AstarGridView createAstarGridRenderer() {
         AstarGridState gridState = new AstarGridState(22, 10);
-        AstarGridRenderer gridRenderer = new AstarGridRenderer(gridState, 60);
+        AstarGridView gridRenderer = new AstarGridView(gridState, 60);
         return gridRenderer;
     }
 
@@ -60,16 +57,16 @@ public class MainApp extends Application {
         VBox root = new VBox();
 
         Toolbar toolbar = Toolbar.getDefaultToolbar();
-        ToolbarView toolbarView = new ToolbarView(toolbar);
 
         AStartAlgorithm aStartAlgorithm = new AStartAlgorithm(gridState);
+        //toolbarView.setOnMouseClicked(e -> startExploring(aStartAlgorithm));
 
-        toolbarView.setOnMouseClicked(e -> startExploring(aStartAlgorithm));
+        AstarGridState astarGridState = new AstarGridState(22, 10);
+        AstarGridView astarGridView = new AstarGridView(astarGridState, 50);
+        ToolbarView toolbarView = new ToolbarView(toolbar);
+        MainView mainView = new MainView();
 
-        root.getChildren().add(toolbarView);
-        root.getChildren().add(createAstarGridRenderer().getView());
-
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(mainView);
         scene.getStylesheets().add(getClass().getClassLoader().getResource("styles.css").toExternalForm());
 
         stage.setTitle("Pathfinding");

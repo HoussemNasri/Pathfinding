@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<ToolBar orientation="VERTICAL" prefHeight="349.0" prefWidth="176.0" style="-fx-background-color: #252525;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.MyToolbarView">
+   <items>
+      <VBox prefHeight="150.0" prefWidth="78.0" spacing="10.0">
+         <children>
+            <Label prefHeight="14.0" prefWidth="150.0" text="Grid Editor" textFill="WHITE" VBox.vgrow="ALWAYS">
+               <font>
+                  <Font name="Barlow Condensed Regular" size="18.0" />
+               </font>
+            </Label>
+            <RadioButton mnemonicParsing="false" selected="true" styleClass="grid_tool_style" stylesheets="@styles.css">
+               <graphic>
+                  <ImageView fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons8_play_50px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <toggleGroup>
+                  <ToggleGroup fx:id="groupi" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton mnemonicParsing="false" styleClass="grid_tool_style" stylesheets="@styles.css" toggleGroup="$groupi">
+               <graphic>
+                  <ImageView fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons8_brick_wall_50px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </RadioButton>
+            <RadioButton mnemonicParsing="false" styleClass="grid_tool_style" stylesheets="@styles.css" toggleGroup="$groupi">
+               <graphic>
+                  <ImageView fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons8_broom_50px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </RadioButton>
+         </children>
+      </VBox>
+   </items>
+</ToolBar>

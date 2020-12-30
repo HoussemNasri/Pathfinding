@@ -18,14 +18,39 @@
     -fx-background-color: #1d9bac;
 }
 
-.astar-open-cell-style{
+.astar-open-cell-style {
     -fx-background-color: #34b526;
 }
 
-.astar-close-cell-style{
+.astar-close-cell-style {
     -fx-background-color: #e04242;
 }
 
-.astar-path-cell-style{
+.astar-path-cell-style {
     -fx-background-color: #0a86ea;
+}
+
+.grid_tool_style {
+    -fx-background-color: #00000000;
+    -fx-border-color: white;
+    -fx-border-radius: 3;
+    -fx-padding: 5;
+}
+
+.grid_tool_style .radio{
+    -fx-background-color: #00000000;
+    -fx-padding: 0;
+}
+
+.grid_tool_style .radio . dot{
+    -fx-background-color: #00000000;
+    -fx-padding: 0;
+}
+
+
+.grid_tool_style:selected {
+    -fx-background-color: white;
+    -fx-background-radius: 3;
+    -fx-border-color: white;
+    -fx-padding: 5;
 }
