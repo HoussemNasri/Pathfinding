@@ -31,7 +31,7 @@ public class Toolbar {
         Tool gridClearer = new Tool("Clear Grid", "Clear the board", Icons.BROOM_ICON);
         Tool startPathfinding = new Tool("Start Pathfinding", "Start the pathfinding animation", Icons.PLAY_ICON);
 
-        List<Tool> tools = new ArrayList<>(List.of(wallDrawer, wallRemover, gridClearer, startPathfinding));
+        List<Tool> tools = new ArrayList<>();
         return tools;
     }
 

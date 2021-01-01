@@ -1,42 +1,57 @@
 package org.example.cell.view;
 
 import javafx.scene.Node;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 
 import org.example.cell.AbstractCellModel;
 
-public abstract class AbstractCellView<T extends Region, M extends AbstractCellModel> {
+public abstract class AbstractCellView<M extends AbstractCellModel> extends StackPane {
     protected double size;
     protected M cellModel;
-    protected T view;
 
     public AbstractCellView(double size, M cellModel) {
         this.size = size;
         this.cellModel = cellModel;
-        initializeView();
 
-        getView().setPrefHeight(size);
-        getView().setPrefWidth(size);
+        setPrefHeight(size);
+        setPrefWidth(size);
     }
 
     public void customizeStartCell() {
-        getView().getStyleClass().add("default-start-cell-style");
+        _setStyle(getHomeCellStyleClass());
     }
 
     public void customizeGoalCell() {
-        getView().getStyleClass().add("default-goal-cell-style");
+        _setStyle(getDestinationCelLStyleClass());
     }
 
     public void customizeNormalCell() {
-        getView().getStyleClass().add("default-normal-cell-style");
+        _setStyle(getNormalCellStyleClass());
     }
 
     public void customizeWallCell() {
-        getView().getStyleClass().add("default-wall-cell-style");
+       _setStyle(getWallCellStleClass());
     }
 
-    public T getView(){
-        return view;
+    public void _setStyle(String styleClass){
+        getStyleClass().setAll(styleClass);
     }
-    public abstract void initializeView();
+
+    protected String getHomeCellStyleClass(){
+        return "default-start-cell-style";
+    }
+
+    protected String getDestinationCelLStyleClass(){
+        return "default-goal-cell-style";
+    }
+
+    protected String getNormalCellStyleClass(){
+        return "default-normal-cell-style";
+    }
+
+    protected String getWallCellStleClass(){
+        return "default-wall-cell-style";
+    }
 }

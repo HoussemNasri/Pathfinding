@@ -5,21 +5,23 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
 import de.saxsys.mvvmfx.FluentViewLoader;
+import de.saxsys.mvvmfx.ViewTuple;
 import org.example.cell.state.AstarGridState;
 import org.example.renderer.AstarGridView;
 import org.example.renderer.PathfindingGridView;
-import org.example.toolbar.Toolbar;
-import org.example.toolbar.ToolbarView;
 
 public class MainView extends HBox {
     private ToolBar sideToolbar;
     private GridPane gridView;
     private PathfindingGridView<?, ?, ?> pathfindingGridView;
+    private final ViewTuple<MyToolbarView, MyToolbarViewModel> toolbarTuple;
 
     public MainView() {
         setPathfindingGridView(createPathfindingGridView());
-        setSideToolbar(createToolbarView());
+        toolbarTuple = createToolbarTuple();
+        setSideToolbar(getToolbarView());
         initLayout();
+        pathfindingGridView.registerCellClickedListener(getMyToolbarViewModel());
     }
 
     private void initLayout() {
@@ -32,14 +34,21 @@ public class MainView extends HBox {
         gridView = pathfindingGridView.getView();
     }
 
-    private ToolBar createToolbarView() {
-        return (ToolBar) FluentViewLoader.fxmlView(MyToolbarView.class).load().getView();
-        //return new ToolbarView(Toolbar.getDefaultToolbar());
+    private ViewTuple<MyToolbarView, MyToolbarViewModel> createToolbarTuple() {
+        return FluentViewLoader.fxmlView(MyToolbarView.class).load();
+    }
+
+    private ToolBar getToolbarView() {
+        return (ToolBar) toolbarTuple.getView();
+    }
+
+    private MyToolbarViewModel getMyToolbarViewModel() {
+        return toolbarTuple.getViewModel();
     }
 
     private PathfindingGridView<?, ?, ?> createPathfindingGridView() {
-        AstarGridState astarGridState = new AstarGridState(22, 10);
-        AstarGridView astarGridView = new AstarGridView(astarGridState, 50);
+        AstarGridState astarGridState = new AstarGridState(45, 30);
+        AstarGridView astarGridView = new AstarGridView(astarGridState, 20);
         return astarGridView;
     }
 

@@ -37,12 +37,12 @@
     -fx-padding: 5;
 }
 
-.grid_tool_style .radio{
+.grid_tool_style .radio {
     -fx-background-color: #00000000;
     -fx-padding: 0;
 }
 
-.grid_tool_style .radio . dot{
+.grid_tool_style .radio . dot {
     -fx-background-color: #00000000;
     -fx-padding: 0;
 }
@@ -53,4 +53,14 @@
     -fx-background-radius: 3;
     -fx-border-color: white;
     -fx-padding: 5;
+}
+
+.grid-tool-container-style {
+    -fx-background-radius: 3;
+    -fx-background-color: #00000044;
+}
+
+.algorithm_player_tool_style {
+    -fx-background-color: white;
+    -fx-background-radius: 3;
 }

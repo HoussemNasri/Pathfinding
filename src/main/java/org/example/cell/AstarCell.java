@@ -4,32 +4,14 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
 public class AstarCell extends AbstractCellModel {
-    private final ObjectProperty<CellType> cellType = new SimpleObjectProperty<>();
     private final ObjectProperty<AstarCost> cost = new SimpleObjectProperty<>();
 
-    public AstarCell(Point coordinate, CellType cellType, boolean walkable) {
-        super(coordinate, walkable);
-        setType(cellType);
-    }
-
     public AstarCell(Point coordinate, CellType cellType) {
-        this(coordinate, cellType, true);
+        super(coordinate, cellType != CellType.WALL_CELL, cellType);
     }
 
     public AstarCell(Point coordinate) {
         this(coordinate, CellType.NORMAL_CELL);
-    }
-
-    public CellType getType() {
-        return cellType.get();
-    }
-
-    public void setType(CellType cellType) {
-        this.cellType.set(cellType);
-    }
-
-    public ObjectProperty<CellType> cellTypeProperty() {
-        return cellType;
     }
 
     public AstarCost getCost() {
@@ -45,8 +27,8 @@ public class AstarCell extends AbstractCellModel {
     }
 
     /**
-     * Helpers to facilitate the access to cost object
-     * */
+     * Helpers to speed up accessing cost object
+     */
     public int gCost() {
         return getCost().gCost();
     }
@@ -65,11 +47,6 @@ public class AstarCell extends AbstractCellModel {
 
     public int fCost() {
         return getCost().fCost();
-    }
-
-
-    public enum CellType {
-        NORMAL_CELL, WALL_CELL, START_CELL, GOAL_CELL, OPEN_CELL, CLOSE_CELL, PATH_CELL
     }
 }
 

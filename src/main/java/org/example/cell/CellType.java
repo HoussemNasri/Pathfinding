@@ -1,0 +1,6 @@
+package org.example.cell;
+
+public enum CellType {
+    NORMAL_CELL, WALL_CELL, START_CELL, GOAL_CELL,
+    OPEN_CELL, CLOSE_CELL, PATH_CELL, HOME_CELL_PLACEHOLDER, GOAL_CELL_PLACEHOLDER
+}

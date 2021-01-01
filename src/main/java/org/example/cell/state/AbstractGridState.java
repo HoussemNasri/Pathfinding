@@ -13,13 +13,13 @@ public abstract class AbstractGridState<T extends AbstractCellModel> {
     protected IntegerProperty height = new SimpleIntegerProperty();
 
     private final ObjectProperty<Point> startingPoint = new SimpleObjectProperty<>();
-    private final ObjectProperty<Point> goalPoint = new SimpleObjectProperty<>();
+    private final ObjectProperty<Point> destinationPoint = new SimpleObjectProperty<>();
 
     public AbstractGridState(int width, int height) {
         setWidth(width);
         setHeight(height);
         setStartingPoint(Point.of(0, 0));
-        setGoalPoint(Point.of(width - 1, height - 1));
+        setDestinationPoint(Point.of(width - 1, height - 1));
     }
 
     public abstract T getCell(Point coordinate);
@@ -28,16 +28,16 @@ public abstract class AbstractGridState<T extends AbstractCellModel> {
         this.startingPoint.set(startingPoint);
     }
 
-    private void setGoalPoint(Point goalPoint) {
-        this.goalPoint.set(goalPoint);
+    public void setDestinationPoint(Point goalPoint) {
+        this.destinationPoint.set(goalPoint);
     }
 
     public ObjectProperty<Point> startingPointProperty() {
         return startingPoint;
     }
 
-    public ObjectProperty<Point> goalPointProperty() {
-        return goalPoint;
+    public ObjectProperty<Point> destinationPointProperty() {
+        return destinationPoint;
     }
 
     public void setWidth(int width) {
