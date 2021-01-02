@@ -7,6 +7,8 @@ import javafx.scene.layout.HBox;
 import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.ViewTuple;
 import org.example.cell.state.AstarGridState;
+import org.example.mytoolbar.MyToolbarView;
+import org.example.mytoolbar.MyToolbarViewModel;
 import org.example.renderer.AstarGridView;
 import org.example.renderer.PathfindingGridView;
 

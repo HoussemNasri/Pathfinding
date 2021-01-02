@@ -1,4 +1,4 @@
-package org.example;
+package org.example.mytoolbar;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;

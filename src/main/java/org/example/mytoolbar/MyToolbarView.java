@@ -1,11 +1,13 @@
-package org.example;
+package org.example.mytoolbar;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
@@ -52,6 +54,9 @@ public class MyToolbarView implements FxmlView<MyToolbarViewModel>, Initializabl
     @FXML
     private Button resetButton;
 
+    @FXML
+    private ComboBox<String> algorithmsComboBox;
+
     private void initIcons() {
         wallToolButton.selectedProperty()
                       .addListener(((observable, oldValue, newValue) -> wallToolIcon.setImage(ToolbarIconProvider.getWallToolIcon(newValue))));
@@ -74,6 +79,15 @@ public class MyToolbarView implements FxmlView<MyToolbarViewModel>, Initializabl
         return viewModel;
     }
 
+    public void initAlgorithms() {
+        algorithmsComboBox.getItems().addAll(PathfindingAlgorithmsRegistry
+                .getPathfindingAlgorithms()
+                .stream()
+                .map(PathfindingAlgorithmModel::getFullName)
+                .collect(Collectors.toList()));
+        algorithmsComboBox.getSelectionModel().selectFirst();
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initIcons();
@@ -87,5 +101,6 @@ public class MyToolbarView implements FxmlView<MyToolbarViewModel>, Initializabl
         stepOutButton.setOnMouseClicked(e -> viewModel.stepOut());
         resetButton.setOnMouseClicked(e -> viewModel.reset());
         setupPlayPauseButton();
+        initAlgorithms();
     }
 }

@@ -1,4 +1,4 @@
-package org.example;
+package org.example.mytoolbar;
 
 import javafx.scene.image.Image;
 
