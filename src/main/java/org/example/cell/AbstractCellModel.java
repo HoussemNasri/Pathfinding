@@ -3,45 +3,41 @@ package org.example.cell;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
-public abstract class AbstractCellModel {
-    protected Point coordinate;
-    protected boolean walkable;
+public abstract class AbstractCellModel extends CellHistoryBrowser {
+    protected final Point coordinate;
     protected final ObjectProperty<CellType> cellType = new SimpleObjectProperty<>();
-    protected CellType previousCellType;
 
-    public AbstractCellModel(Point coordinate, boolean walkable, CellType cellType) {
+    public AbstractCellModel(Point coordinate, CellType cellType) {
         this.coordinate = coordinate;
-        this.walkable = walkable;
         setType(cellType);
-        setPreviousCellType(cellType);
-        cellTypeProperty().addListener((obs, old, neww) -> previousCellType = old);
-    }
-
-    public AbstractCellModel(Point coordinate, boolean walkable) {
-        this(coordinate, walkable, CellType.NORMAL_CELL);
     }
 
     public AbstractCellModel(Point coordinate) {
-        this(coordinate, true);
+        this(coordinate, CellType.NORMAL_CELL);
     }
 
     public Point getCoordinate() {
         return coordinate;
     }
 
+    /**
+     * Check whether this cell can be explored or not. The default implementation allow exploring all types of cells, only WALL_CELL is not explorable
+     */
     public boolean isWalkable() {
-        return walkable;
-    }
-
-    public void setWalkable(boolean walkable) {
-        this.walkable = walkable;
+        return cellType.get() != CellType.WALL_CELL;
     }
 
     public CellType getType() {
         return cellType.get();
     }
 
+    /**
+     * Sets the type of the cell and record history
+     */
     public void setType(CellType cellType) {
+        if (cellType == getType())
+            return;
+        addHistoryRecord(cellType);
         this.cellType.set(cellType);
     }
 
@@ -49,11 +45,19 @@ public abstract class AbstractCellModel {
         return cellType;
     }
 
-    public CellType getPreviousCellType() {
-        return previousCellType;
+    @Override
+    public void stepIn() {
+        super.stepIn();
+        if (peek() != null) {
+            cellTypeProperty().set(peek());
+        }
     }
 
-    private void setPreviousCellType(CellType cellType) {
-        this.previousCellType = cellType;
+    @Override
+    public void stepOut() {
+        super.stepOut();
+        if (peek() != null) {
+            cellTypeProperty().set(peek());
+        }
     }
 }

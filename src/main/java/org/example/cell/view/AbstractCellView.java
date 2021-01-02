@@ -7,16 +7,18 @@ import javafx.scene.layout.StackPane;
 
 import org.example.cell.AbstractCellModel;
 
-public abstract class AbstractCellView<M extends AbstractCellModel> extends StackPane {
+public abstract class AbstractCellView<M extends AbstractCellModel> {
     protected double size;
     protected M cellModel;
+    protected StackPane view;
 
     public AbstractCellView(double size, M cellModel) {
         this.size = size;
         this.cellModel = cellModel;
+        view = new StackPane();
 
-        setPrefHeight(size);
-        setPrefWidth(size);
+        getView().setPrefHeight(size);
+        getView().setPrefWidth(size);
     }
 
     public void customizeStartCell() {
@@ -32,26 +34,31 @@ public abstract class AbstractCellView<M extends AbstractCellModel> extends Stac
     }
 
     public void customizeWallCell() {
-       _setStyle(getWallCellStleClass());
+        _setStyle(getWallCellStleClass());
     }
 
-    public void _setStyle(String styleClass){
-        getStyleClass().setAll(styleClass);
+    public void _setStyle(String styleClass) {
+        getView().getStyleClass().setAll(styleClass);
     }
 
-    protected String getHomeCellStyleClass(){
+    protected String getHomeCellStyleClass() {
         return "default-start-cell-style";
     }
 
-    protected String getDestinationCelLStyleClass(){
+    protected String getDestinationCelLStyleClass() {
         return "default-goal-cell-style";
     }
 
-    protected String getNormalCellStyleClass(){
+    protected String getNormalCellStyleClass() {
         return "default-normal-cell-style";
     }
 
-    protected String getWallCellStleClass(){
+    protected String getWallCellStleClass() {
         return "default-wall-cell-style";
     }
+
+    public StackPane getView(){
+        return view;
+    }
+
 }

@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ToggleGroup?>
@@ -25,9 +26,9 @@
                   </Label>
                   <HBox spacing="8.0">
                      <children>
-                        <RadioButton fx:id="fenceToolButton" mnemonicParsing="false" styleClass="grid_tool_style" stylesheets="@styles.css">
+                        <RadioButton fx:id="wallToolButton" mnemonicParsing="false" styleClass="grid_tool_style" stylesheets="@styles.css">
                            <graphic>
-                              <ImageView fx:id="fenceToolIcon" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="wallToolIcon" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@icons8_fence_48px_white.png" />
                                  </image>
@@ -71,36 +72,36 @@
                   </Label>
                   <HBox spacing="8.0">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="32.0" styleClass="algorithm_player_tool_style" stylesheets="@styles.css">
+                        <Button fx:id="stepOutButton" mnemonicParsing="false" prefHeight="35.0" prefWidth="32.0" styleClass="algorithm_player_tool_style" stylesheets="@styles.css">
                            <graphic>
-                              <ImageView fx:id="clearToolIcon111" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@icons8_step_into_48px.png" />
                                  </image>
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="32.0" styleClass="algorithm_player_tool_style" stylesheets="@styles.css">
+                        <Button fx:id="playPauseButton" mnemonicParsing="false" prefHeight="35.0" prefWidth="32.0" styleClass="algorithm_player_tool_style" stylesheets="@styles.css">
                            <graphic>
-                              <ImageView fx:id="clearToolIcon11" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@icons8_play_48px.png" />
                                  </image>
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="32.0" styleClass="algorithm_player_tool_style" stylesheets="@styles.css">
+                        <Button fx:id="stepInButton" mnemonicParsing="false" prefHeight="35.0" prefWidth="32.0" styleClass="algorithm_player_tool_style" stylesheets="@styles.css">
                            <graphic>
-                              <ImageView fx:id="clearToolIcon1" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@icons8_step_out_48px.png" />
                                  </image>
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="32.0" styleClass="algorithm_player_tool_style" stylesheets="@styles.css">
+                        <Button fx:id="resetButton" mnemonicParsing="false" prefHeight="35.0" prefWidth="32.0" styleClass="algorithm_player_tool_style" stylesheets="@styles.css">
                            <graphic>
-                              <ImageView fx:id="clearToolIcon12" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@icons8_reset_48px.png" />
                                  </image>
@@ -109,6 +110,19 @@
                         </Button>
                      </children>
                   </HBox>
+               </children>
+               <VBox.margin>
+                  <Insets left="8.0" top="10.0" />
+               </VBox.margin>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="8.0">
+               <children>
+                  <Label text="Select Pathfinding Algorithm" textFill="WHITE">
+                     <font>
+                        <Font name="Barlow Condensed Regular" size="17.0" />
+                     </font>
+                  </Label>
+                  <ComboBox prefWidth="150.0" promptText="A* search Algorithm" styleClass="combo-box" stylesheets="@styles.css" />
                </children>
                <VBox.margin>
                   <Insets left="8.0" top="10.0" />

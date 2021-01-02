@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
@@ -15,9 +16,6 @@ import de.saxsys.mvvmfx.InjectViewModel;
 
 @FxmlPath("/toolbar_view.fxml")
 public class MyToolbarView implements FxmlView<MyToolbarViewModel>, Initializable {
-    public static final int HOME_MARKER_TOOL = 1;
-    public static final int DESTINATION_MARKER_TOOL = 2;
-
     @InjectViewModel
     private MyToolbarViewModel viewModel;
 
@@ -25,10 +23,10 @@ public class MyToolbarView implements FxmlView<MyToolbarViewModel>, Initializabl
     private ToggleGroup gridEditorGroup;
 
     @FXML
-    private RadioButton fenceToolButton;
+    private RadioButton wallToolButton;
 
     @FXML
-    private ImageView fenceToolIcon;
+    private ImageView wallToolIcon;
 
     @FXML
     private RadioButton startMarkerButton;
@@ -42,13 +40,34 @@ public class MyToolbarView implements FxmlView<MyToolbarViewModel>, Initializabl
     @FXML
     private ImageView goalMarkerIcon;
 
+    @FXML
+    private Button stepOutButton;
+
+    @FXML
+    private Button playPauseButton;
+
+    @FXML
+    private Button stepInButton;
+
+    @FXML
+    private Button resetButton;
+
     private void initIcons() {
-        fenceToolButton.selectedProperty()
-                       .addListener(((observable, oldValue, newValue) -> fenceToolIcon.setImage(ToolIconProvider.getFenceToolIcon(newValue))));
+        wallToolButton.selectedProperty()
+                      .addListener(((observable, oldValue, newValue) -> wallToolIcon.setImage(ToolbarIconProvider.getWallToolIcon(newValue))));
         goalMarkerButton.selectedProperty()
-                        .addListener(((observable, oldValue, newValue) -> goalMarkerIcon.setImage(ToolIconProvider.getGoalMarkerToolIcon(newValue))));
+                        .addListener(((observable, oldValue, newValue) -> goalMarkerIcon.setImage(ToolbarIconProvider.getGoalMarkerToolIcon(newValue))));
         startMarkerButton.selectedProperty()
-                         .addListener(((observable, oldValue, newValue) -> startMarkerIcon.setImage(ToolIconProvider.getStartMarkerToolIcon(newValue))));
+                         .addListener(((observable, oldValue, newValue) -> startMarkerIcon.setImage(ToolbarIconProvider.getStartMarkerToolIcon(newValue))));
+    }
+
+    private void setupPlayPauseButton() {
+        playPauseButton.setOnMouseClicked(event -> {
+            ImageView buttonIcon = new ImageView(ToolbarIconProvider.getPlayPauseButtonIcon(viewModel.isPlaying()));
+            playPauseButton.setGraphic(buttonIcon);
+
+            viewModel.playPause();
+        });
     }
 
     public MyToolbarViewModel getViewModel() {
@@ -58,9 +77,15 @@ public class MyToolbarView implements FxmlView<MyToolbarViewModel>, Initializabl
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initIcons();
-        gridEditorGroup.selectToggle(fenceToolButton);
+        gridEditorGroup.selectToggle(wallToolButton);
         gridEditorGroup.selectedToggleProperty().addListener(((observable, oldValue, newValue) -> {
-            viewModel.selectedToolProperty().set(gridEditorGroup.getToggles().indexOf(newValue));
+            int selectedToolIndex = gridEditorGroup.getToggles().indexOf(newValue);
+            viewModel.selectedGridToolProperty().set(GridTool.values()[selectedToolIndex]);
         }));
+
+        stepInButton.setOnMouseClicked(e -> viewModel.stepIn());
+        stepOutButton.setOnMouseClicked(e -> viewModel.stepOut());
+        resetButton.setOnMouseClicked(e -> viewModel.reset());
+        setupPlayPauseButton();
     }
 }

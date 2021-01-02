@@ -5,6 +5,7 @@ import java.util.List;
 
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -13,7 +14,6 @@ import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
@@ -21,10 +21,11 @@ import org.example.cell.AbstractCellModel;
 import org.example.cell.Point;
 import org.example.cell.state.AbstractGridState;
 import org.example.cell.view.AbstractCellView;
-import org.example.grid.CellView;
 import org.example.gridlistener.CellClickedListener;
+import org.example.gridlistener.CellDraggedOverListener;
 import org.example.gridlistener.CellEnteredListener;
-import org.example.gridlistener.GridListener;
+import org.example.gridlistener.cellevent.CellClickedEvent;
+import org.example.gridlistener.cellevent.CellDraggedOverEvent;
 
 /**
  * @param <C> The cell model
@@ -44,6 +45,8 @@ public abstract class PathfindingGridView<C extends AbstractCellModel, S extends
 
     protected List<CellEnteredListener> cellEnteredListeners = new ArrayList<>();
     protected List<CellClickedListener> cellClickedListeners = new ArrayList<>();
+    protected List<CellDraggedOverListener> cellDraggedOverListeners = new ArrayList<>();
+
     private AbstractCellModel previousEnteredCell = null;
 
     public PathfindingGridView(S gridState, double cellSize) {
@@ -60,6 +63,7 @@ public abstract class PathfindingGridView<C extends AbstractCellModel, S extends
 
         handleOnMouseClicked();
         handleOnMouseEntered();
+        handleOnMouseDragged();
     }
 
     private void handleOnMouseClicked() {
@@ -67,7 +71,7 @@ public abstract class PathfindingGridView<C extends AbstractCellModel, S extends
             AbstractCellModel clickedCell = extractEventCell(e);
             if (clickedCell == null)
                 return;
-            cellClickedListeners.forEach(lis -> lis.onCellClicked(gridState, clickedCell));
+            cellClickedListeners.forEach(lis -> lis.onCellClicked(CellClickedEvent.of(gridState, clickedCell, e.getButton())));
         });
     }
 
@@ -78,6 +82,16 @@ public abstract class PathfindingGridView<C extends AbstractCellModel, S extends
                 return;
             cellEnteredListeners.forEach(lis -> lis.onCellEntered(previousEnteredCell, enteredCell));
             previousEnteredCell = enteredCell;
+        });
+    }
+
+    private void handleOnMouseDragged() {
+        gridView.setOnMouseDragged(e -> {
+            AbstractCellModel draggedOverCell = extractEventCell(e);
+            if (draggedOverCell == null)
+                return;
+            cellDraggedOverListeners.forEach(lis -> lis.onCellDraggedOver(CellDraggedOverEvent.of(
+                    gridState, draggedOverCell, e.getButton())));
         });
     }
 
@@ -128,12 +142,13 @@ public abstract class PathfindingGridView<C extends AbstractCellModel, S extends
     @Override
     public void render() {
         gridView.setMinSize(cellSize * width, cellSize * height);
+        gridView.setMaxHeight(cellSize * height);
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 AbstractCellView<C> cellView = createCellView(Point.of(x, y));
-                GridPane.setColumnIndex(cellView, x);
-                GridPane.setRowIndex(cellView, y);
-                gridView.add(cellView, x, y);
+                GridPane.setColumnIndex(cellView.getView(), x);
+                GridPane.setRowIndex(cellView.getView(), y);
+                gridView.add(cellView.getView(), x, y);
             }
         }
     }
@@ -152,12 +167,16 @@ public abstract class PathfindingGridView<C extends AbstractCellModel, S extends
         });
     }
 
-    public void attachCellEnteredListener(CellEnteredListener cellEnteredListener) {
-        cellEnteredListeners.add(cellEnteredListener);
+    public void registerCellEnteredListener(CellEnteredListener listener) {
+        cellEnteredListeners.add(listener);
     }
 
-    public void registerCellClickedListener(CellClickedListener cellClickedListener) {
-        cellClickedListeners.add(cellClickedListener);
+    public void registerCellClickedListener(CellClickedListener listener) {
+        cellClickedListeners.add(listener);
+    }
+
+    public void registerCellDraggedOverListener(CellDraggedOverListener listener) {
+        cellDraggedOverListeners.add(listener);
     }
 
     public S getGridState() {

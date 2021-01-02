@@ -2,6 +2,9 @@
     -fx-font-smoothing-type: lcd;
 }
 
+.root{
+    -fx-background-color: white;
+}
 .default-start-cell-style {
     -fx-background-color: #411aa4;
 }
@@ -63,4 +66,22 @@
 .algorithm_player_tool_style {
     -fx-background-color: white;
     -fx-background-radius: 3;
+}
+
+.algorithm_player_tool_style:hover{
+    -fx-background-color: #b5b4b4;
+    -fx-background-radius: 3;
+}
+
+/* Customise the ListCell that appears in the ComboBox button itself */
+.combo-box > .list-cell {
+    -fx-background: transparent;
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-text-base-color;
+    -fx-padding: 0.333333em 0.666667em 0.333333em 0.666667em; /* 4 8 4 8 */
+}
+.combo-box-base > .arrow-button {
+    -fx-background-radius: 0 3 3 0, 0 2 2 0, 0 1 1 0;
+    -fx-padding: 0.5em 0.667em 0.5em 0.833333em; /* 6 8 6 10 */
+    -fx-background-color: transparent;
 }

@@ -21,7 +21,9 @@ public class MainView extends HBox {
         toolbarTuple = createToolbarTuple();
         setSideToolbar(getToolbarView());
         initLayout();
+
         pathfindingGridView.registerCellClickedListener(getMyToolbarViewModel());
+        pathfindingGridView.registerCellDraggedOverListener(getMyToolbarViewModel());
     }
 
     private void initLayout() {
@@ -35,7 +37,9 @@ public class MainView extends HBox {
     }
 
     private ViewTuple<MyToolbarView, MyToolbarViewModel> createToolbarTuple() {
-        return FluentViewLoader.fxmlView(MyToolbarView.class).load();
+        return FluentViewLoader.fxmlView(MyToolbarView.class)
+                               .viewModel(new MyToolbarViewModel(pathfindingGridView.getGridState()))
+                               .load();
     }
 
     private ToolBar getToolbarView() {
@@ -47,8 +51,8 @@ public class MainView extends HBox {
     }
 
     private PathfindingGridView<?, ?, ?> createPathfindingGridView() {
-        AstarGridState astarGridState = new AstarGridState(45, 30);
-        AstarGridView astarGridView = new AstarGridView(astarGridState, 20);
+        AstarGridState astarGridState = new AstarGridState(60, 40);
+        AstarGridView astarGridView = new AstarGridView(astarGridState, 18);
         return astarGridView;
     }
 

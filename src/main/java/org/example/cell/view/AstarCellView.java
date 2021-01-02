@@ -2,6 +2,7 @@ package org.example.cell.view;
 
 import javafx.animation.Interpolator;
 import javafx.animation.ScaleTransition;
+import javafx.animation.Transition;
 import javafx.beans.Observable;
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
@@ -11,7 +12,6 @@ import org.example.cell.AstarCell;
 import org.example.cell.CellType;
 
 public class AstarCellView extends AbstractCellView<AstarCell> {
-
     public AstarCellView(double size, AstarCell cellModel) {
         super(size, cellModel);
         customizeCell(null, null, cellModel.getType());
@@ -20,11 +20,14 @@ public class AstarCellView extends AbstractCellView<AstarCell> {
 
     private void customizeCell(Observable o, CellType ol, CellType cellType) {
         Node transitionNode = createTransitionNode(cellType);
-        ScaleTransition typeTransition = createTypeTransitionAnimation(transitionNode);
-        getChildren().add(transitionNode);
+
+        Transition typeTransition = null;
+        if (cellType == CellType.WALL_CELL) {
+            typeTransition = createWallTypeTransition(transitionNode);
+        } else
+            typeTransition = createDefaultTypeTransition(transitionNode);
 
         typeTransition.setOnFinished(e -> {
-            System.out.println(":"+cellType);
             switch (cellType) {
                 case START_CELL -> customizeStartCell();
                 case GOAL_CELL -> customizeGoalCell();
@@ -35,17 +38,31 @@ public class AstarCellView extends AbstractCellView<AstarCell> {
                 case CLOSE_CELL -> customizeCloseCell();
                 case PATH_CELL -> customizePathCell();
             }
-            getChildren().remove(transitionNode);
+            view.getChildren().remove(transitionNode);
         });
     }
 
-    private ScaleTransition createTypeTransitionAnimation(Node animationNode) {
+    private ScaleTransition createDefaultTypeTransition(Node animationNode) {
+        view.getChildren().add(animationNode);
         ScaleTransition scaleTransition = new ScaleTransition(Duration.seconds(0.10), animationNode);
         scaleTransition.setFromX(0.1);
         scaleTransition.setFromY(0.1);
         scaleTransition.setToX(1);
         scaleTransition.setToY(1);
         scaleTransition.setInterpolator(Interpolator.EASE_OUT);
+        scaleTransition.play();
+
+        return scaleTransition;
+    }
+
+    private ScaleTransition createWallTypeTransition(Node animationNode) {
+        view.getChildren().add(animationNode);
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.seconds(0.10), animationNode);
+        scaleTransition.setFromX(0.1);
+        scaleTransition.setFromY(0.1);
+        scaleTransition.setToX(1);
+        scaleTransition.setToY(1);
+        scaleTransition.setInterpolator(Interpolator.EASE_IN);
         scaleTransition.play();
 
         return scaleTransition;
@@ -60,7 +77,7 @@ public class AstarCellView extends AbstractCellView<AstarCell> {
     private String cellStyleResolver(CellType cellType) {
         return switch (cellType) {
             case NORMAL_CELL -> "default-normal-cell-style";
-            case WALL_CELL -> "";
+            case WALL_CELL -> "default-wall-cell-style";
             case START_CELL -> "default-start-cell-style";
             case GOAL_CELL -> "default-goal-cell-style";
             default -> "";
@@ -76,18 +93,18 @@ public class AstarCellView extends AbstractCellView<AstarCell> {
     }
 
     private void customizeOpenCell() {
-        getStyleClass().add("astar-open-cell-style");
+        _setStyle(getOpenCellStyleClass());
     }
 
     private void customizeCloseCell() {
-        getStyleClass().add("astar-close-cell-style");
+        _setStyle(getClosedCellStyleClass());
     }
 
     private void customizePathCell() {
-        getStyleClass().add("astar-path-cell-style");
+        _setStyle(getPathCellStyleClass());
     }
 
-    private void customizeHomePlaceholderCell() {
-        setStyle("-fx-background-color: #e3f51d");
+    private String getPathCellStyleClass() {
+        return "";
     }
 }

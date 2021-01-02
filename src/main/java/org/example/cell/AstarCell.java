@@ -7,7 +7,7 @@ public class AstarCell extends AbstractCellModel {
     private final ObjectProperty<AstarCost> cost = new SimpleObjectProperty<>();
 
     public AstarCell(Point coordinate, CellType cellType) {
-        super(coordinate, cellType != CellType.WALL_CELL, cellType);
+        super(coordinate, cellType);
     }
 
     public AstarCell(Point coordinate) {
