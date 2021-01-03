@@ -9,22 +9,33 @@ import org.example.cell.AbstractCellModel;
 import org.example.cell.AstarCell;
 import org.example.cell.CellType;
 import org.example.cell.state.AbstractGridState;
+import org.example.cell.state.PathfindingGridState;
 import org.example.gridlistener.CellClickedListener;
 import org.example.gridlistener.CellDraggedOverListener;
 import org.example.gridlistener.cellevent.CellClickedEvent;
 import org.example.gridlistener.cellevent.CellDraggedOverEvent;
-import org.example.pathfinding.AlgorithmPlayer;
-import org.example.pathfinding.AstarAlgorithmPlayer;
-import org.example.pathfinding.PathfindingAlgorithmPlayer;
+import org.example.pathfinding.update.AlgorithmPlayer;
+import org.example.pathfinding.update.AstarAlgorithmPlayer;
+import org.example.pathfinding.update.PathfindingAlgorithmPlayer;
+import org.example.providers.PathfindingAlgorithmPlayerProvider;
 
 public class MyToolbarViewModel implements ViewModel, CellClickedListener, CellDraggedOverListener, AlgorithmPlayer {
     private final ObjectProperty<GridTool> selectedGridTool = new SimpleObjectProperty<>(GridTool.WALL_TOOL);
-    private final ObjectProperty<PathfindingAlgorithm> selectedAlgorithm = new SimpleObjectProperty<>();
+    private final ObjectProperty<PathfindingAlgorithm> selectedAlgorithm = new SimpleObjectProperty<>(PathfindingAlgorithm.A_STAR);
 
-    private PathfindingAlgorithmPlayer selectedAlgorithmPlayer;
+    private PathfindingAlgorithmPlayer pathfindingAlgorithmPlayer;
 
-    public MyToolbarViewModel(AbstractGridState<?> gridState) {
-        selectedAlgorithmPlayer = new AstarAlgorithmPlayer((AbstractGridState<AstarCell>) gridState);
+    public MyToolbarViewModel() {
+        pathfindingAlgorithmPlayer = PathfindingAlgorithmPlayerProvider.getAstarAlgorithmPlayer();
+        selectedAlgorithm.addListener((observable, oldValue, newValue) -> {
+            if (newValue == PathfindingAlgorithm.A_STAR) {
+                pathfindingAlgorithmPlayer = PathfindingAlgorithmPlayerProvider.getAstarAlgorithmPlayer();
+                System.out.println(pathfindingAlgorithmPlayer);
+            } else if (newValue == PathfindingAlgorithm.DIJKSTRA) {
+                pathfindingAlgorithmPlayer = PathfindingAlgorithmPlayerProvider.getDijkstraAlgorithmPlayer();
+                System.out.println(pathfindingAlgorithmPlayer);
+            }
+        });
     }
 
     public ObjectProperty<GridTool> selectedGridToolProperty() {
@@ -93,32 +104,32 @@ public class MyToolbarViewModel implements ViewModel, CellClickedListener, CellD
 
     @Override
     public void play() {
-        selectedAlgorithmPlayer.play();
+        pathfindingAlgorithmPlayer.play();
     }
 
     @Override
     public boolean isPlaying() {
-        return selectedAlgorithmPlayer.isPlaying();
+        return pathfindingAlgorithmPlayer.isPlaying();
     }
 
     @Override
     public void pause() {
-        selectedAlgorithmPlayer.pause();
+        pathfindingAlgorithmPlayer.pause();
     }
 
     @Override
     public void reset() {
-        selectedAlgorithmPlayer.reset();
+        pathfindingAlgorithmPlayer.reset();
     }
 
     @Override
     public void stepIn() {
-        selectedAlgorithmPlayer.stepIn();
+        pathfindingAlgorithmPlayer.stepIn();
     }
 
     @Override
     public void stepOut() {
-        selectedAlgorithmPlayer.stepOut();
+        pathfindingAlgorithmPlayer.stepOut();
     }
 
     public void playPause() {

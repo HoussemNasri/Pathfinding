@@ -47,9 +47,9 @@
                               </ImageView>
                            </graphic>
                         </RadioButton>
-                        <RadioButton fx:id="goalMarkerButton" mnemonicParsing="false" styleClass="grid_tool_style" stylesheets="@styles.css" toggleGroup="$gridEditorGroup">
+                        <RadioButton fx:id="destinationMarkerButton" mnemonicParsing="false" styleClass="grid_tool_style" stylesheets="@styles.css" toggleGroup="$gridEditorGroup">
                            <graphic>
-                              <ImageView fx:id="goalMarkerIcon" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="destinationMarkerIcon" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@icons8_destination_48px_white.png" />
                                  </image>

@@ -7,7 +7,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import org.example.cell.state.AstarGridState;
+import org.example.cell.AstarCell;
+import org.example.cell.state.PathfindingGridState;
 import org.example.grid.GridState;
 import org.example.pathfinding.AStartAlgorithm;
 import org.example.grid.GridView;
@@ -16,7 +17,6 @@ import org.example.style.AStarCellStyler;
 import org.example.style.StandardCellStyler;
 import org.example.style.StartGoalStyler;
 import org.example.toolbar.Toolbar;
-import org.example.toolbar.ToolbarView;
 
 public class MainApp extends Application {
 
@@ -39,7 +39,7 @@ public class MainApp extends Application {
     }
 
     private AstarGridView createAstarGridRenderer() {
-        AstarGridState gridState = new AstarGridState(22, 10);
+        PathfindingGridState gridState = new PathfindingGridState(AstarCell.class, 22, 10);
         AstarGridView gridRenderer = new AstarGridView(gridState, 60);
         return gridRenderer;
     }
@@ -61,9 +61,6 @@ public class MainApp extends Application {
         AStartAlgorithm aStartAlgorithm = new AStartAlgorithm(gridState);
         //toolbarView.setOnMouseClicked(e -> startExploring(aStartAlgorithm));
 
-        AstarGridState astarGridState = new AstarGridState(22, 10);
-        AstarGridView astarGridView = new AstarGridView(astarGridState, 50);
-        ToolbarView toolbarView = new ToolbarView(toolbar);
         MainView mainView = new MainView();
 
         Scene scene = new Scene(mainView);

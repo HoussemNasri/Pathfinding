@@ -4,12 +4,12 @@ import javafx.scene.layout.GridPane;
 
 import org.example.cell.AstarCell;
 import org.example.cell.Point;
-import org.example.cell.state.AstarGridState;
+import org.example.cell.state.PathfindingGridState;
 import org.example.cell.view.AstarCellView;
 
-public class AstarGridView extends PathfindingGridView<AstarCell, AstarGridState, AstarCellView> {
+public class AstarGridView extends PathfindingGridView<AstarCell, PathfindingGridState<AstarCell>, AstarCellView> {
 
-    public AstarGridView(AstarGridState gridState, double cellSize) {
+    public AstarGridView(PathfindingGridState gridState, double cellSize) {
         super(gridState, cellSize);
     }
 

@@ -1,4 +1,4 @@
-package org.example.pathfinding;
+package org.example.pathfinding.update;
 
 public interface AlgorithmPlayer {
     void play();

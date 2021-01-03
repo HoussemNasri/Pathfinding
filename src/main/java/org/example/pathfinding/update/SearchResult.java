@@ -1,4 +1,4 @@
-package org.example.pathfinding;
+package org.example.pathfinding.update;
 
 import java.util.Objects;
 

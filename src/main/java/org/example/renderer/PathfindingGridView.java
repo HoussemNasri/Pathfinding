@@ -20,6 +20,7 @@ import javafx.scene.paint.Paint;
 import org.example.cell.AbstractCellModel;
 import org.example.cell.Point;
 import org.example.cell.state.AbstractGridState;
+import org.example.cell.state.PathfindingGridState;
 import org.example.cell.view.AbstractCellView;
 import org.example.gridlistener.CellClickedListener;
 import org.example.gridlistener.CellDraggedOverListener;
@@ -39,7 +40,7 @@ public abstract class PathfindingGridView<C extends AbstractCellModel, S extends
     protected int width;
     protected int height;
     protected double cellSize;
-    protected S gridState;
+    protected PathfindingGridState<C> gridState;
 
     protected GridPane gridView;
 
@@ -49,7 +50,7 @@ public abstract class PathfindingGridView<C extends AbstractCellModel, S extends
 
     private AbstractCellModel previousEnteredCell = null;
 
-    public PathfindingGridView(S gridState, double cellSize) {
+    public PathfindingGridView(PathfindingGridState<C> gridState, double cellSize) {
         this.gridState = gridState;
         this.cellSize = cellSize;
         this.width = gridState.getWidth();
@@ -179,7 +180,7 @@ public abstract class PathfindingGridView<C extends AbstractCellModel, S extends
         cellDraggedOverListeners.add(listener);
     }
 
-    public S getGridState() {
+    public PathfindingGridState<C> getGridState() {
         return gridState;
     }
 }

@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.SelectionModel;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 
@@ -37,10 +38,10 @@ public class MyToolbarView implements FxmlView<MyToolbarViewModel>, Initializabl
     private ImageView startMarkerIcon;
 
     @FXML
-    private RadioButton goalMarkerButton;
+    private RadioButton destinationMarkerButton;
 
     @FXML
-    private ImageView goalMarkerIcon;
+    private ImageView destinationMarkerIcon;
 
     @FXML
     private Button stepOutButton;
@@ -60,8 +61,8 @@ public class MyToolbarView implements FxmlView<MyToolbarViewModel>, Initializabl
     private void initIcons() {
         wallToolButton.selectedProperty()
                       .addListener(((observable, oldValue, newValue) -> wallToolIcon.setImage(ToolbarIconProvider.getWallToolIcon(newValue))));
-        goalMarkerButton.selectedProperty()
-                        .addListener(((observable, oldValue, newValue) -> goalMarkerIcon.setImage(ToolbarIconProvider.getGoalMarkerToolIcon(newValue))));
+        destinationMarkerButton.selectedProperty()
+                               .addListener(((observable, oldValue, newValue) -> destinationMarkerIcon.setImage(ToolbarIconProvider.getGoalMarkerToolIcon(newValue))));
         startMarkerButton.selectedProperty()
                          .addListener(((observable, oldValue, newValue) -> startMarkerIcon.setImage(ToolbarIconProvider.getStartMarkerToolIcon(newValue))));
     }
@@ -85,7 +86,12 @@ public class MyToolbarView implements FxmlView<MyToolbarViewModel>, Initializabl
                 .stream()
                 .map(PathfindingAlgorithmModel::getFullName)
                 .collect(Collectors.toList()));
-        algorithmsComboBox.getSelectionModel().selectFirst();
+
+        SelectionModel<String> selectionModel = algorithmsComboBox.getSelectionModel();
+        selectionModel.selectFirst();
+        selectionModel.selectedIndexProperty().addListener((observable, oldValue, algorithmIndex) -> {
+            viewModel.selectedAlgorithmProperty().set(PathfindingAlgorithm.values()[algorithmIndex.intValue()]);
+        });
     }
 
     @Override

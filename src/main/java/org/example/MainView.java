@@ -6,7 +6,8 @@ import javafx.scene.layout.HBox;
 
 import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.ViewTuple;
-import org.example.cell.state.AstarGridState;
+import org.example.cell.AstarCell;
+import org.example.cell.state.PathfindingGridState;
 import org.example.mytoolbar.MyToolbarView;
 import org.example.mytoolbar.MyToolbarViewModel;
 import org.example.renderer.AstarGridView;
@@ -39,9 +40,7 @@ public class MainView extends HBox {
     }
 
     private ViewTuple<MyToolbarView, MyToolbarViewModel> createToolbarTuple() {
-        return FluentViewLoader.fxmlView(MyToolbarView.class)
-                               .viewModel(new MyToolbarViewModel(pathfindingGridView.getGridState()))
-                               .load();
+        return FluentViewLoader.fxmlView(MyToolbarView.class).load();
     }
 
     private ToolBar getToolbarView() {
@@ -53,8 +52,8 @@ public class MainView extends HBox {
     }
 
     private PathfindingGridView<?, ?, ?> createPathfindingGridView() {
-        AstarGridState astarGridState = new AstarGridState(60, 40);
-        AstarGridView astarGridView = new AstarGridView(astarGridState, 18);
+        PathfindingGridState<?> pathfindingGridState = new PathfindingGridState<>(AstarCell.class, 30, 16);
+        AstarGridView astarGridView = new AstarGridView(pathfindingGridState, 40);
         return astarGridView;
     }
 

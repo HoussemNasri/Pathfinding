@@ -4,7 +4,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
 public class AstarCell extends AbstractCellModel {
-    private final ObjectProperty<AstarCost> cost = new SimpleObjectProperty<>();
+    private final ObjectProperty<AstarCost> cost = new SimpleObjectProperty<>(new AstarCost());
 
     public AstarCell(Point coordinate, CellType cellType) {
         super(coordinate, cellType);
