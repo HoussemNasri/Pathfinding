@@ -16,7 +16,7 @@ import org.example.grid.view.grid.BaseGridviewWrapper;
 public class MainView extends HBox {
     private ToolBar sideToolbar;
     private GridPane gridView;
-    private BaseGridviewWrapper<?, ?> baseGridViewWrapper;
+    private BaseGridviewWrapper<?, ?> baseGridviewWrapper;
     private final ViewTuple<MyToolbarView, MyToolbarViewModel> toolbarTuple;
 
     public MainView() {
@@ -25,8 +25,8 @@ public class MainView extends HBox {
         setSideToolbar(toolbarView());
         initLayout();
 
-        baseGridViewWrapper.registerCellClickedListener(toolbarViewModel());
-        baseGridViewWrapper.registerCellDraggedOverListener(toolbarViewModel());
+        baseGridviewWrapper.registerCellClickedListener(toolbarViewModel());
+        baseGridviewWrapper.registerCellDraggedOverListener(toolbarViewModel());
 
         toolbarViewModel().selectedAlgorithmProperty().addListener(this::onNewAlgorithmSelected);
     }
@@ -37,7 +37,7 @@ public class MainView extends HBox {
     }
 
     public void setPathfindingGridView(BaseGridviewWrapper<?, ?> baseGridViewWrapper) {
-        this.baseGridViewWrapper = baseGridViewWrapper;
+        this.baseGridviewWrapper = baseGridViewWrapper;
         gridView = baseGridViewWrapper.getView();
     }
 

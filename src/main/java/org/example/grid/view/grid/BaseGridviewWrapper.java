@@ -57,8 +57,8 @@ public abstract class BaseGridviewWrapper<C extends BaseCell, V extends BaseCell
         styleGridView();
         render();
 
-        registerWidthListener();
-        registerHeightListener();
+        handleWidthChange();
+        handleHeightChange();
 
         handleOnMouseClicked();
         handleOnMouseEntered();
@@ -152,14 +152,14 @@ public abstract class BaseGridviewWrapper<C extends BaseCell, V extends BaseCell
         }
     }
 
-    private void registerWidthListener() {
+    private void handleWidthChange() {
         gridState.widthProperty().addListener((observable, oldValue, newValue) -> {
             BaseGridviewWrapper.this.width = newValue.intValue();
             render();
         });
     }
 
-    private void registerHeightListener() {
+    private void handleHeightChange() {
         gridState.widthProperty().addListener((observable, oldValue, newValue) -> {
             BaseGridviewWrapper.this.width = newValue.intValue();
             render();
