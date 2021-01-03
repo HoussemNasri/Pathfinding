@@ -7,16 +7,16 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import org.example.cell.AstarCell;
-import org.example.cell.state.PathfindingGridState;
-import org.example.grid.GridState;
-import org.example.pathfinding.AStartAlgorithm;
-import org.example.grid.GridView;
-import org.example.renderer.AstarGridView;
-import org.example.style.AStarCellStyler;
-import org.example.style.StandardCellStyler;
-import org.example.style.StartGoalStyler;
-import org.example.toolbar.Toolbar;
+import org.example.grid.cell.AstarCell;
+import org.example.grid.state.PathfindingGridState;
+import org.example.legacy.grid.GridState;
+import org.example.legacy.pathfinding.AStartAlgorithm;
+import org.example.legacy.grid.GridView;
+import org.example.grid.view.grid.AstarGridView;
+import org.example.legacy.style.AStarCellStyler;
+import org.example.legacy.style.StandardCellStyler;
+import org.example.legacy.style.StartGoalStyler;
+import org.example.legacy.toolbar.Toolbar;
 
 public class MainApp extends Application {
 

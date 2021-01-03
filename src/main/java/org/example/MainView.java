@@ -1,32 +1,36 @@
 package org.example;
 
+import javafx.beans.Observable;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
 import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.ViewTuple;
-import org.example.cell.AstarCell;
-import org.example.cell.state.PathfindingGridState;
-import org.example.mytoolbar.MyToolbarView;
-import org.example.mytoolbar.MyToolbarViewModel;
-import org.example.renderer.AstarGridView;
-import org.example.renderer.PathfindingGridView;
+import org.example.toolbar.MyToolbarView;
+import org.example.toolbar.MyToolbarViewModel;
+import org.example.toolbar.PathfindingAlgorithm;
+import org.example.providers.PathfindingGridStateProvider;
+import org.example.providers.PathfindingGridViewProvider;
+import org.example.grid.view.grid.AstarGridView;
+import org.example.grid.view.grid.BaseGridView;
 
 public class MainView extends HBox {
     private ToolBar sideToolbar;
     private GridPane gridView;
-    private PathfindingGridView<?, ?, ?> pathfindingGridView;
+    private BaseGridView<?, ?> baseGridView;
     private final ViewTuple<MyToolbarView, MyToolbarViewModel> toolbarTuple;
 
     public MainView() {
-        setPathfindingGridView(createPathfindingGridView());
+        setPathfindingGridView(PathfindingGridViewProvider.getAstarGridView());
         toolbarTuple = createToolbarTuple();
         setSideToolbar(getToolbarView());
         initLayout();
 
-        pathfindingGridView.registerCellClickedListener(getMyToolbarViewModel());
-        pathfindingGridView.registerCellDraggedOverListener(getMyToolbarViewModel());
+        baseGridView.registerCellClickedListener(getMyToolbarViewModel());
+        baseGridView.registerCellDraggedOverListener(getMyToolbarViewModel());
+
+        getMyToolbarViewModel().selectedAlgorithmProperty().addListener(this::onNewAlgorithmSelected);
     }
 
     private void initLayout() {
@@ -34,9 +38,9 @@ public class MainView extends HBox {
         getChildren().add(gridView);
     }
 
-    public void setPathfindingGridView(PathfindingGridView<?, ?, ?> pathfindingGridView) {
-        this.pathfindingGridView = pathfindingGridView;
-        gridView = pathfindingGridView.getView();
+    public void setPathfindingGridView(BaseGridView<?, ?> baseGridView) {
+        this.baseGridView = baseGridView;
+        gridView = baseGridView.getView();
     }
 
     private ViewTuple<MyToolbarView, MyToolbarViewModel> createToolbarTuple() {
@@ -51,17 +55,19 @@ public class MainView extends HBox {
         return toolbarTuple.getViewModel();
     }
 
-    private PathfindingGridView<?, ?, ?> createPathfindingGridView() {
-        PathfindingGridState<?> pathfindingGridState = new PathfindingGridState<>(AstarCell.class, 30, 16);
-        AstarGridView astarGridView = new AstarGridView(pathfindingGridState, 40);
-        return astarGridView;
-    }
-
     private void registerToolbarListener() {
 
     }
 
     private void setSideToolbar(ToolBar toolbar) {
         this.sideToolbar = toolbar;
+    }
+
+    private void onNewAlgorithmSelected(Observable obs, PathfindingAlgorithm old, PathfindingAlgorithm algorithm) {
+        if (algorithm == PathfindingAlgorithm.A_STAR) {
+            setPathfindingGridView(PathfindingGridViewProvider.getAstarGridView());
+        } else if (algorithm == PathfindingAlgorithm.DIJKSTRA) {
+            setPathfindingGridView(PathfindingGridViewProvider.getDijkstraGridView());
+        }
     }
 }

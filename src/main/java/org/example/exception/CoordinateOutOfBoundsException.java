@@ -2,7 +2,7 @@ package org.example.exception;
 
 import javafx.geometry.Point2D;
 
-import org.example.grid.Cell;
+import org.example.legacy.grid.Cell;
 
 public class CoordinateOutOfBoundsException extends RuntimeException {
     public CoordinateOutOfBoundsException(int x, int y) {

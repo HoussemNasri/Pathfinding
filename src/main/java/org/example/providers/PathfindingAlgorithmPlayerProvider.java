@@ -1,7 +1,7 @@
 package org.example.providers;
 
-import org.example.pathfinding.update.AstarAlgorithmPlayer;
-import org.example.pathfinding.update.DijkstraAlgorithmPlayer;
+import org.example.algorithms.aStar.AstarAlgorithmPlayer;
+import org.example.algorithms.disjkstra.DijkstraAlgorithmPlayer;
 
 public class PathfindingAlgorithmPlayerProvider {
     private static AstarAlgorithmPlayer astarAlgorithmPlayer = null;
