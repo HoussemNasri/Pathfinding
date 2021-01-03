@@ -7,9 +7,9 @@ import org.example.grid.Point;
 import org.example.grid.state.PathfindingGridState;
 import org.example.grid.view.cell.DijkstraCellView;
 
-public class DijkstraGridView extends BaseGridView<DijkstraCell, DijkstraCellView> {
+public class DijkstraGridviewWrapper extends BaseGridviewWrapper<DijkstraCell, DijkstraCellView> {
 
-    public DijkstraGridView(PathfindingGridState<DijkstraCell> gridState, double cellSize) {
+    public DijkstraGridviewWrapper(PathfindingGridState<DijkstraCell> gridState, double cellSize) {
         super(gridState, cellSize);
     }
 

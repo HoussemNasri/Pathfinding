@@ -31,7 +31,7 @@ import org.example.grid.view.cell.BaseCellView;
  * @param <C> The cell model
  * @param <V> The cell view
  */
-public abstract class BaseGridView<C extends BaseCell, V extends BaseCellView<C>> implements GridRenderer<GridPane> {
+public abstract class BaseGridviewWrapper<C extends BaseCell, V extends BaseCellView<C>> implements GridRenderer<GridPane> {
     private static final double BORDER_WIDTH = 1;
     private static final Paint BORDER_PANT = Color.BLACK;
 
@@ -48,7 +48,7 @@ public abstract class BaseGridView<C extends BaseCell, V extends BaseCellView<C>
 
     private BaseCell previousEnteredCell = null;
 
-    public BaseGridView(PathfindingGridState<C> gridState, double cellSize) {
+    public BaseGridviewWrapper(PathfindingGridState<C> gridState, double cellSize) {
         this.gridState = gridState;
         this.cellSize = cellSize;
         this.width = gridState.getWidth();
@@ -154,14 +154,14 @@ public abstract class BaseGridView<C extends BaseCell, V extends BaseCellView<C>
 
     private void registerWidthListener() {
         gridState.widthProperty().addListener((observable, oldValue, newValue) -> {
-            BaseGridView.this.width = newValue.intValue();
+            BaseGridviewWrapper.this.width = newValue.intValue();
             render();
         });
     }
 
     private void registerHeightListener() {
         gridState.widthProperty().addListener((observable, oldValue, newValue) -> {
-            BaseGridView.this.width = newValue.intValue();
+            BaseGridviewWrapper.this.width = newValue.intValue();
             render();
         });
     }

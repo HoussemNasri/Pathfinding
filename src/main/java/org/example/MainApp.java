@@ -12,7 +12,7 @@ import org.example.grid.state.PathfindingGridState;
 import org.example.legacy.grid.GridState;
 import org.example.legacy.pathfinding.AStartAlgorithm;
 import org.example.legacy.grid.GridView;
-import org.example.grid.view.grid.AstarGridView;
+import org.example.grid.view.grid.AstarGridviewWrapper;
 import org.example.legacy.style.AStarCellStyler;
 import org.example.legacy.style.StandardCellStyler;
 import org.example.legacy.style.StartGoalStyler;
@@ -38,9 +38,9 @@ public class MainApp extends Application {
         timer.start();
     }
 
-    private AstarGridView createAstarGridRenderer() {
+    private AstarGridviewWrapper createAstarGridRenderer() {
         PathfindingGridState gridState = new PathfindingGridState(AstarCell.class, 22, 10);
-        AstarGridView gridRenderer = new AstarGridView(gridState, 60);
+        AstarGridviewWrapper gridRenderer = new AstarGridviewWrapper(gridState, 60);
         return gridRenderer;
     }
 

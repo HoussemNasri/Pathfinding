@@ -10,27 +10,25 @@ import de.saxsys.mvvmfx.ViewTuple;
 import org.example.toolbar.MyToolbarView;
 import org.example.toolbar.MyToolbarViewModel;
 import org.example.toolbar.PathfindingAlgorithm;
-import org.example.providers.PathfindingGridStateProvider;
 import org.example.providers.PathfindingGridViewProvider;
-import org.example.grid.view.grid.AstarGridView;
-import org.example.grid.view.grid.BaseGridView;
+import org.example.grid.view.grid.BaseGridviewWrapper;
 
 public class MainView extends HBox {
     private ToolBar sideToolbar;
     private GridPane gridView;
-    private BaseGridView<?, ?> baseGridView;
+    private BaseGridviewWrapper<?, ?> baseGridViewWrapper;
     private final ViewTuple<MyToolbarView, MyToolbarViewModel> toolbarTuple;
 
     public MainView() {
+        this.toolbarTuple = createToolbarTuple();
         setPathfindingGridView(PathfindingGridViewProvider.getAstarGridView());
-        toolbarTuple = createToolbarTuple();
-        setSideToolbar(getToolbarView());
+        setSideToolbar(toolbarView());
         initLayout();
 
-        baseGridView.registerCellClickedListener(getMyToolbarViewModel());
-        baseGridView.registerCellDraggedOverListener(getMyToolbarViewModel());
+        baseGridViewWrapper.registerCellClickedListener(toolbarViewModel());
+        baseGridViewWrapper.registerCellDraggedOverListener(toolbarViewModel());
 
-        getMyToolbarViewModel().selectedAlgorithmProperty().addListener(this::onNewAlgorithmSelected);
+        toolbarViewModel().selectedAlgorithmProperty().addListener(this::onNewAlgorithmSelected);
     }
 
     private void initLayout() {
@@ -38,25 +36,21 @@ public class MainView extends HBox {
         getChildren().add(gridView);
     }
 
-    public void setPathfindingGridView(BaseGridView<?, ?> baseGridView) {
-        this.baseGridView = baseGridView;
-        gridView = baseGridView.getView();
+    public void setPathfindingGridView(BaseGridviewWrapper<?, ?> baseGridViewWrapper) {
+        this.baseGridViewWrapper = baseGridViewWrapper;
+        gridView = baseGridViewWrapper.getView();
     }
 
     private ViewTuple<MyToolbarView, MyToolbarViewModel> createToolbarTuple() {
         return FluentViewLoader.fxmlView(MyToolbarView.class).load();
     }
 
-    private ToolBar getToolbarView() {
+    private ToolBar toolbarView() {
         return (ToolBar) toolbarTuple.getView();
     }
 
-    private MyToolbarViewModel getMyToolbarViewModel() {
+    private MyToolbarViewModel toolbarViewModel() {
         return toolbarTuple.getViewModel();
-    }
-
-    private void registerToolbarListener() {
-
     }
 
     private void setSideToolbar(ToolBar toolbar) {

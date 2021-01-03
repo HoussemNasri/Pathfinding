@@ -1,25 +1,25 @@
 package org.example.providers;
 
-import org.example.grid.view.grid.AstarGridView;
-import org.example.grid.view.grid.DijkstraGridView;
+import org.example.grid.view.grid.AstarGridviewWrapper;
+import org.example.grid.view.grid.DijkstraGridviewWrapper;
 
 public class PathfindingGridViewProvider {
     //TODO("Get cellSize for preferences")
     private static double cellSize = 40;
 
-    private static AstarGridView astarGridView = null;
-    private static DijkstraGridView dijkstraGridView = null;
+    private static AstarGridviewWrapper astarGridView = null;
+    private static DijkstraGridviewWrapper dijkstraGridView = null;
 
-    public static AstarGridView getAstarGridView() {
+    public static AstarGridviewWrapper getAstarGridView() {
         if (astarGridView == null) {
-            astarGridView = new AstarGridView(PathfindingGridStateProvider.getAstarPathfindingGridState(), cellSize);
+            astarGridView = new AstarGridviewWrapper(PathfindingGridStateProvider.getAstarPathfindingGridState(), cellSize);
         }
         return astarGridView;
     }
 
-    public static DijkstraGridView getDijkstraGridView() {
+    public static DijkstraGridviewWrapper getDijkstraGridView() {
         if (dijkstraGridView == null) {
-            dijkstraGridView = new DijkstraGridView(PathfindingGridStateProvider.getDijkstraPathfindingGridState(), cellSize);
+            dijkstraGridView = new DijkstraGridviewWrapper(PathfindingGridStateProvider.getDijkstraPathfindingGridState(), cellSize);
         }
         return dijkstraGridView;
     }
