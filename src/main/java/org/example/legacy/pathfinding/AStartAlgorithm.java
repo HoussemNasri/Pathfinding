@@ -5,7 +5,7 @@ import java.util.Set;
 
 import javafx.geometry.Point2D;
 
-import org.example.algorithms.aStar.AstarCost;
+import org.example.algorithms.astar.AstarCost;
 import org.example.legacy.grid.CellKind;
 import org.example.legacy.grid.GridState;
 import org.example.legacy.style.AStarCellStyler;
@@ -107,7 +107,7 @@ public class AStartAlgorithm implements PathfindingAlgorithm{
 
                 if (isCenter || isCorner)
                     continue;
-                if (!CoordinateUtils.isCoordinateCorrect(newX, newY, gridState.getWidth(), gridState.getHeight()) || !getCell(newX, newY).isWalkable()) {
+                if (!CoordinateUtils.inBounds(newX, newY, gridState.getWidth(), gridState.getHeight()) || !getCell(newX, newY).isWalkable()) {
                     continue;
                 }
 

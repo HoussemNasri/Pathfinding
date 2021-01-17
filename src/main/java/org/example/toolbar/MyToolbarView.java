@@ -69,11 +69,11 @@ public class MyToolbarView implements FxmlView<MyToolbarViewModel>, Initializabl
     }
 
     private void setupPlayPauseButton() {
-        playPauseButton.setOnMouseClicked(event -> {
-            ImageView buttonIcon = new ImageView(ToolbarIconProvider.getPlayPauseButtonIcon(viewModel.isPlaying()));
-            playPauseButton.setGraphic(buttonIcon);
+        playPauseButton.setOnMouseClicked(event -> viewModel.playPause());
 
-            viewModel.playPause();
+        viewModel.isPlayingProperty().addListener((observable, oldValue, newValue) -> {
+            ImageView buttonIcon = (ImageView) playPauseButton.getGraphic();
+            buttonIcon.setImage(ToolbarIconProvider.getPlayPauseButtonIcon(newValue));
         });
     }
 

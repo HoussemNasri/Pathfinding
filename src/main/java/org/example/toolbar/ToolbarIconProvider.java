@@ -36,6 +36,10 @@ public class ToolbarIconProvider {
     }
 
     public static Image getPlayPauseButtonIcon(boolean isPlaying) {
-        return null;
+        if (isPlaying) {
+            return new Image(ToolbarIconProvider.class.getResource("/icons8_pause_48px.png").toExternalForm());
+        } else {
+            return new Image(ToolbarIconProvider.class.getResource("/icons8_play_48px.png").toExternalForm());
+        }
     }
 }

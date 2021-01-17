@@ -8,14 +8,14 @@ import javafx.beans.property.SimpleObjectProperty;
 import org.example.grid.cell.BaseCell;
 import org.example.grid.Point;
 
-public abstract class AbstractGridState<T extends BaseCell> {
+public abstract class BaseGridState<T extends BaseCell> {
     protected IntegerProperty width = new SimpleIntegerProperty();
     protected IntegerProperty height = new SimpleIntegerProperty();
 
     private final ObjectProperty<Point> startingPoint = new SimpleObjectProperty<>();
     private final ObjectProperty<Point> destinationPoint = new SimpleObjectProperty<>();
 
-    public AbstractGridState(int width, int height) {
+    public BaseGridState(int width, int height) {
         setWidth(width);
         setHeight(height);
         setStartingPoint(Point.of(0, 0));
@@ -30,6 +30,22 @@ public abstract class AbstractGridState<T extends BaseCell> {
 
     public void setDestinationPoint(Point goalPoint) {
         this.destinationPoint.set(goalPoint);
+    }
+
+    public T getStartingCell() {
+        return getCell(getStartingPoint());
+    }
+
+    public T getDestinationCell() {
+        return getCell(getDestinationPoint());
+    }
+
+    public Point getStartingPoint() {
+        return startingPoint.get();
+    }
+
+    public Point getDestinationPoint() {
+        return destinationPoint.get();
     }
 
     public ObjectProperty<Point> startingPointProperty() {

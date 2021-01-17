@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Practice">
+   <children>
+      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: blue;">
+         <children>
+            <Pane prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: green;">
+               <children>
+                  <Pane prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: red;" />
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

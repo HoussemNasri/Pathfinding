@@ -4,10 +4,10 @@ import org.example.grid.cell.AstarCell;
 import org.example.grid.cell.DijkstraCell;
 import org.example.grid.state.PathfindingGridState;
 
-public class PathfindingGridStateProvider {
+public class GridStateProvider {
     //TODO("Get width and height from preferences")
-    private static int width = 31;
-    private static int height = 15;
+    private static int width = 18;
+    private static int height = 10;
 
     private static PathfindingGridState<AstarCell> astarState = null;
     private static PathfindingGridState<DijkstraCell> dijkstraState = null;

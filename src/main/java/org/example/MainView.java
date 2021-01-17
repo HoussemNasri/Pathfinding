@@ -10,7 +10,7 @@ import de.saxsys.mvvmfx.ViewTuple;
 import org.example.toolbar.MyToolbarView;
 import org.example.toolbar.MyToolbarViewModel;
 import org.example.toolbar.PathfindingAlgorithm;
-import org.example.providers.PathfindingGridViewProvider;
+import org.example.providers.GridViewProvider;
 import org.example.grid.view.grid.BaseGridviewWrapper;
 
 public class MainView extends HBox {
@@ -21,7 +21,7 @@ public class MainView extends HBox {
 
     public MainView() {
         this.toolbarTuple = createToolbarTuple();
-        setPathfindingGridView(PathfindingGridViewProvider.getAstarGridView());
+        setPathfindingGridView(GridViewProvider.getAstarGridView());
         setSideToolbar(toolbarView());
         initLayout();
 
@@ -59,9 +59,9 @@ public class MainView extends HBox {
 
     private void onNewAlgorithmSelected(Observable obs, PathfindingAlgorithm old, PathfindingAlgorithm algorithm) {
         if (algorithm == PathfindingAlgorithm.A_STAR) {
-            setPathfindingGridView(PathfindingGridViewProvider.getAstarGridView());
+            setPathfindingGridView(GridViewProvider.getAstarGridView());
         } else if (algorithm == PathfindingAlgorithm.DIJKSTRA) {
-            setPathfindingGridView(PathfindingGridViewProvider.getDijkstraGridView());
+            setPathfindingGridView(GridViewProvider.getDijkstraGridView());
         }
     }
 }

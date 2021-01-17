@@ -3,11 +3,13 @@ package org.example.grid.cell;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
-import org.example.algorithms.aStar.AstarCost;
+import org.example.algorithms.astar.AstarCost;
 import org.example.grid.Point;
+import org.jetbrains.annotations.NotNull;
 
 public class AstarCell extends BaseCell {
     private final ObjectProperty<AstarCost> cost = new SimpleObjectProperty<>(new AstarCost());
+    private AstarCell parent = null;
 
     public AstarCell(Point coordinate, CellType cellType) {
         super(coordinate, cellType);
@@ -27,6 +29,14 @@ public class AstarCell extends BaseCell {
 
     public ObjectProperty<AstarCost> costProperty() {
         return cost;
+    }
+
+    public void setParent(AstarCell parent) {
+        this.parent = parent;
+    }
+
+    public AstarCell getParent() {
+        return parent;
     }
 
     /**
@@ -50,6 +60,13 @@ public class AstarCell extends BaseCell {
 
     public int fCost() {
         return getCost().fCost();
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        AstarCell clone = new AstarCell((Point) coordinate.clone(), getType());
+        clone.setCost((AstarCost) getCost().clone());
+        return clone;
     }
 }
 

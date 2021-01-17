@@ -13,7 +13,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-import org.example.algorithms.aStar.AstarCost;
+import org.example.algorithms.astar.AstarCost;
 import org.example.legacy.style.CellStyler;
 import org.example.legacy.style.StandardCellStyler;
 import org.example.legacy.style.StartGoalStyler;

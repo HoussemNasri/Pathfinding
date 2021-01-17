@@ -6,7 +6,7 @@ import org.example.grid.Point;
 import org.example.grid.factory.CellModelFactory;
 import org.example.grid.factory.GridStateMatrixFactory;
 
-public class PathfindingGridState<T extends BaseCell> extends AbstractGridState<T> {
+public class PathfindingGridState<T extends BaseCell> extends BaseGridState<T> implements Cloneable {
 
     private T[][] state;
     private Class<T> clazz;
@@ -44,5 +44,22 @@ public class PathfindingGridState<T extends BaseCell> extends AbstractGridState<
     @Override
     public T getCell(Point coordinate) {
         return state[coordinate.getX()][coordinate.getY()];
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        Object clone = super.clone();
+        PathfindingGridState<T> gridStateClone = new PathfindingGridState<>(clazz, width.get(), height.get());
+
+        gridStateClone.startingPointProperty().set((Point) this.startingPointProperty().getValue().clone());
+        gridStateClone.destinationPointProperty().set((Point) this.destinationPointProperty().getValue().clone());
+
+        for (int i = 0; i < gridStateClone.getWidth(); i++) {
+            for (int j = 0; j < gridStateClone.getHeight(); j++) {
+                T cellClone = (T) this.state[i][j].clone();
+                gridStateClone.state[i][j] = cellClone;
+            }
+        }
+        return gridStateClone;
     }
 }

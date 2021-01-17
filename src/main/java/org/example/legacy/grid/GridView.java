@@ -123,7 +123,7 @@ public class GridView implements GridRenderer<GridPane> {
         if (x == null || y == null)
             return;
         Point2D cellCoordinate = new Point2D(x, y);
-        if (!CoordinateUtils.isCoordinateCorrect(x, y, gridState.getWidth(), gridState.getHeight())
+        if (!CoordinateUtils.inBounds(x, y, gridState.getWidth(), gridState.getHeight())
                 || gridState.isStartCell(cellCoordinate)
                 || gridState.isGoalCell(cellCoordinate)
                 || !gridState.getCell(cellCoordinate).isWalkable())

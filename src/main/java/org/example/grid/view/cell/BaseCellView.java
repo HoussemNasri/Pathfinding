@@ -1,5 +1,7 @@
 package org.example.grid.view.cell;
 
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
 import org.example.grid.cell.BaseCell;
@@ -7,7 +9,7 @@ import org.example.grid.cell.BaseCell;
 public abstract class BaseCellView<M extends BaseCell> {
     protected double size;
     protected M cellModel;
-    protected StackPane view;
+    protected Pane view;
 
     public BaseCellView(double size, M cellModel) {
         this.size = size;
@@ -19,19 +21,26 @@ public abstract class BaseCellView<M extends BaseCell> {
     }
 
     public void customizeStartCell() {
+        this.view.getChildren().clear();
         _setStyle(getHomeCellStyleClass());
     }
 
     public void customizeGoalCell() {
+        this.view.getChildren().clear();
         _setStyle(getDestinationCelLStyleClass());
     }
 
     public void customizeNormalCell() {
-        _setStyle(getNormalCellStyleClass());
+        /*this.view.getChildren().clear();
+        _setStyle(getNormalCellStyleClass());*/
+        setView(new SimpleCellView(getNormalCellStyleClass()));
     }
 
     public void customizeWallCell() {
-        _setStyle(getWallCellStleClass());
+        System.out.println("wall");
+        /*this.view.getChildren().clear();
+        _setStyle(getWallCellStleClass());*/
+        setView(new SimpleCellView(getWallStyleClass()));
     }
 
     public void _setStyle(String styleClass) {
@@ -50,12 +59,19 @@ public abstract class BaseCellView<M extends BaseCell> {
         return "default-normal-cell-style";
     }
 
-    protected String getWallCellStleClass() {
+    protected String getWallStyleClass() {
         return "default-wall-cell-style";
     }
 
-    public StackPane getView(){
+    public Pane getView() {
         return view;
     }
 
+    public void setView(Pane stackPane) {
+        getView().getChildren().clear();
+        getView().getChildren().add(stackPane);
+
+        GridPane.setColumnIndex(stackPane, cellModel.getCoordinate().getX());
+        GridPane.setColumnIndex(stackPane, cellModel.getCoordinate().getY());
+    }
 }

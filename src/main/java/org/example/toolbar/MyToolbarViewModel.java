@@ -1,5 +1,6 @@
 package org.example.toolbar;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.input.MouseButton;
@@ -7,29 +8,29 @@ import javafx.scene.input.MouseButton;
 import de.saxsys.mvvmfx.ViewModel;
 import org.example.grid.cell.BaseCell;
 import org.example.grid.cell.CellType;
-import org.example.grid.state.AbstractGridState;
+import org.example.grid.state.BaseGridState;
 import org.example.grid.listener.CellClickedListener;
 import org.example.grid.listener.CellDraggedOverListener;
 import org.example.grid.listener.cellevent.CellClickedEvent;
 import org.example.grid.listener.cellevent.CellDraggedOverEvent;
-import org.example.algorithms.AlgorithmPlayer;
+import org.example.algorithms.BasePlayer;
 import org.example.algorithms.PathfindingAlgorithmPlayer;
-import org.example.providers.PathfindingAlgorithmPlayerProvider;
+import org.example.providers.AlgorithmPlayerProvider;
 
-public class MyToolbarViewModel implements ViewModel, CellClickedListener, CellDraggedOverListener, AlgorithmPlayer {
+public class MyToolbarViewModel implements ViewModel, CellClickedListener, CellDraggedOverListener, BasePlayer {
     private final ObjectProperty<GridTool> selectedGridTool = new SimpleObjectProperty<>(GridTool.WALL_TOOL);
     private final ObjectProperty<PathfindingAlgorithm> selectedAlgorithm = new SimpleObjectProperty<>(PathfindingAlgorithm.A_STAR);
 
     private PathfindingAlgorithmPlayer pathfindingAlgorithmPlayer;
 
     public MyToolbarViewModel() {
-        pathfindingAlgorithmPlayer = PathfindingAlgorithmPlayerProvider.getAstarAlgorithmPlayer();
+        pathfindingAlgorithmPlayer = AlgorithmPlayerProvider.getAstarAlgorithmPlayer();
         selectedAlgorithm.addListener((observable, oldValue, newValue) -> {
             if (newValue == PathfindingAlgorithm.A_STAR) {
-                pathfindingAlgorithmPlayer = PathfindingAlgorithmPlayerProvider.getAstarAlgorithmPlayer();
+                pathfindingAlgorithmPlayer = AlgorithmPlayerProvider.getAstarAlgorithmPlayer();
                 System.out.println(pathfindingAlgorithmPlayer);
             } else if (newValue == PathfindingAlgorithm.DIJKSTRA) {
-                pathfindingAlgorithmPlayer = PathfindingAlgorithmPlayerProvider.getDijkstraAlgorithmPlayer();
+                pathfindingAlgorithmPlayer = AlgorithmPlayerProvider.getDijkstraAlgorithmPlayer();
                 System.out.println(pathfindingAlgorithmPlayer);
             }
         });
@@ -45,7 +46,7 @@ public class MyToolbarViewModel implements ViewModel, CellClickedListener, CellD
 
     @Override
     public void onCellClicked(CellClickedEvent clickedEvent) {
-        AbstractGridState<?> gridState = clickedEvent.getGridState();
+        BaseGridState<?> gridState = clickedEvent.getGridState();
         BaseCell clickedCell = clickedEvent.getClickedCell();
         MouseButton mouseButton = clickedEvent.getMouseButton();
 
@@ -79,13 +80,13 @@ public class MyToolbarViewModel implements ViewModel, CellClickedListener, CellD
         }
     }
 
-    private void doDestinationMarkerTool(AbstractGridState<?> gridState, BaseCell cell) {
+    private void doDestinationMarkerTool(BaseGridState<?> gridState, BaseCell cell) {
         if (cell.getType() != CellType.NORMAL_CELL)
             return;
         gridState.setDestinationPoint(cell.getCoordinate());
     }
 
-    private void doHomeMarkerTool(AbstractGridState<?> gridState, BaseCell cell) {
+    private void doHomeMarkerTool(BaseGridState<?> gridState, BaseCell cell) {
         if (cell.getType() != CellType.NORMAL_CELL)
             return;
         gridState.setStartingPoint(cell.getCoordinate());
@@ -105,8 +106,8 @@ public class MyToolbarViewModel implements ViewModel, CellClickedListener, CellD
     }
 
     @Override
-    public boolean isPlaying() {
-        return pathfindingAlgorithmPlayer.isPlaying();
+    public BooleanProperty isPlayingProperty() {
+        return pathfindingAlgorithmPlayer.isPlayingProperty();
     }
 
     @Override
@@ -127,6 +128,10 @@ public class MyToolbarViewModel implements ViewModel, CellClickedListener, CellD
     @Override
     public void stepOut() {
         pathfindingAlgorithmPlayer.stepOut();
+    }
+
+    public boolean isPlaying() {
+        return isPlayingProperty().get();
     }
 
     public void playPause() {

@@ -67,9 +67,11 @@ public abstract class BaseGridviewWrapper<C extends BaseCell, V extends BaseCell
 
     private void handleOnMouseClicked() {
         gridView.setOnMouseClicked(e -> {
+            System.out.println("Clicked gridpane");
             BaseCell clickedCell = extractEventCell(e);
             if (clickedCell == null)
                 return;
+            System.out.println("nn");
             cellClickedListeners.forEach(lis -> lis.onCellClicked(CellClickedEvent.of(gridState, clickedCell, e.getButton())));
         });
     }
@@ -98,8 +100,17 @@ public abstract class BaseGridviewWrapper<C extends BaseCell, V extends BaseCell
         Node node = e.getPickResult().getIntersectedNode();
         if (node == null)
             return null;
-        Integer x = GridPane.getColumnIndex(node);
-        Integer y = GridPane.getRowIndex(node);
+
+        Integer x = null;
+        Integer y = null;
+
+        //Searching recursively for any parent belongs to GridPane
+        while ((x == null || y == null) && node != null) {
+            x = GridPane.getColumnIndex(node);
+            y = GridPane.getRowIndex(node);
+            node = node.getParent();
+        }
+
         if (x == null || y == null)
             return null;
         return gridState.getCell(Point.of(x, y));

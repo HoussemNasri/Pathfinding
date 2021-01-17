@@ -53,4 +53,6 @@ public class AStartCell {
     public Cell getCell() {
         return cell;
     }
+
+
 }

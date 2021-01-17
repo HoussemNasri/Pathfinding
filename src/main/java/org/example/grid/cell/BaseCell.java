@@ -1,12 +1,14 @@
 package org.example.grid.cell;
 
+import java.util.Objects;
+
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
 import org.example.grid.CellHistoryBrowser;
 import org.example.grid.Point;
 
-public abstract class BaseCell extends CellHistoryBrowser {
+public abstract class BaseCell implements Cloneable {
     protected final Point coordinate;
     protected final ObjectProperty<CellType> cellType = new SimpleObjectProperty<>();
 
@@ -40,7 +42,6 @@ public abstract class BaseCell extends CellHistoryBrowser {
     public void setType(CellType cellType) {
         if (cellType == getType())
             return;
-        addHistoryRecord(cellType);
         this.cellType.set(cellType);
     }
 
@@ -49,18 +50,22 @@ public abstract class BaseCell extends CellHistoryBrowser {
     }
 
     @Override
-    public void stepIn() {
-        super.stepIn();
-        if (peek() != null) {
-            cellTypeProperty().set(peek());
-        }
+    public Object clone() throws CloneNotSupportedException{
+        return super.clone();
     }
 
     @Override
-    public void stepOut() {
-        super.stepOut();
-        if (peek() != null) {
-            cellTypeProperty().set(peek());
-        }
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        BaseCell baseCell = (BaseCell) o;
+        return Objects.equals(coordinate, baseCell.coordinate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(coordinate);
     }
 }

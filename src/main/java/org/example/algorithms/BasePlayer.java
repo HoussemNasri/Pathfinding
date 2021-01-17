@@ -1,9 +1,11 @@
 package org.example.algorithms;
 
-public interface AlgorithmPlayer {
+import javafx.beans.property.BooleanProperty;
+
+public interface BasePlayer {
     void play();
 
-    boolean isPlaying();
+    BooleanProperty isPlayingProperty();
 
     void pause();
 

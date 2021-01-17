@@ -2,7 +2,7 @@ package org.example.grid;
 
 import java.util.Objects;
 
-public class Point {
+public class Point implements Cloneable {
     private int x;
     private int y;
 
@@ -41,5 +41,10 @@ public class Point {
     @Override
     public int hashCode() {
         return Objects.hash(x, y);
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

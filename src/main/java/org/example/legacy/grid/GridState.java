@@ -68,7 +68,7 @@ public class GridState {
     }
 
     public Cell getCell(int x, int y) {
-        if (!CoordinateUtils.isCoordinateCorrect(x, y, width, height))
+        if (!CoordinateUtils.inBounds(x, y, width, height))
             throw new CoordinateOutOfBoundsException(x, y);
         return cells[x][y];
     }
@@ -90,7 +90,7 @@ public class GridState {
     }
 
     public void updateStartCell(Point2D startCellCoordinate) {
-        if (!CoordinateUtils.isCoordinateCorrect(startCellCoordinate, width, height))
+        if (!CoordinateUtils.inBounds(startCellCoordinate, width, height))
             throw new CoordinateOutOfBoundsException(startCellCoordinate);
         this.startCellCoordinate = startCellCoordinate;
     }

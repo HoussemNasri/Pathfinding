@@ -1,6 +1,7 @@
 package org.example.algorithms;
 
-public interface PathfindingAlgorithmPlayer extends AlgorithmPlayer {
-    void step();
+import org.example.algorithms.astar.StateManager;
+
+public interface PathfindingAlgorithmPlayer<T> extends BasePlayer, StateManager<T> {
     SearchResult search();
 }

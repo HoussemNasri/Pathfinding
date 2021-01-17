@@ -3,23 +3,23 @@ package org.example.providers;
 import org.example.grid.view.grid.AstarGridviewWrapper;
 import org.example.grid.view.grid.DijkstraGridviewWrapper;
 
-public class PathfindingGridViewProvider {
+public class GridViewProvider {
     //TODO("Get cellSize for preferences")
-    private static double cellSize = 40;
+    private static double cellSize = 70;
 
     private static AstarGridviewWrapper astarGridView = null;
     private static DijkstraGridviewWrapper dijkstraGridView = null;
 
     public static AstarGridviewWrapper getAstarGridView() {
         if (astarGridView == null) {
-            astarGridView = new AstarGridviewWrapper(PathfindingGridStateProvider.getAstarPathfindingGridState(), cellSize);
+            astarGridView = new AstarGridviewWrapper(GridStateProvider.getAstarPathfindingGridState(), cellSize);
         }
         return astarGridView;
     }
 
     public static DijkstraGridviewWrapper getDijkstraGridView() {
         if (dijkstraGridView == null) {
-            dijkstraGridView = new DijkstraGridviewWrapper(PathfindingGridStateProvider.getDijkstraPathfindingGridState(), cellSize);
+            dijkstraGridView = new DijkstraGridviewWrapper(GridStateProvider.getDijkstraPathfindingGridState(), cellSize);
         }
         return dijkstraGridView;
     }

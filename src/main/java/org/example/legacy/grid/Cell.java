@@ -4,7 +4,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Point2D;
 
-import org.example.algorithms.aStar.AstarCost;
+import org.example.algorithms.astar.AstarCost;
 
 public class Cell {
     private Point2D coordinate;
